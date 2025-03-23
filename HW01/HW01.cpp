@@ -9,10 +9,6 @@ struct Player { /* Player structure data type, includes a string type player nam
     int score;
 };
 
-struct dealer {
-    int score;
-};
-
 int drawCard() {
     return rand() % 10 + 1; /* Drawing a card function, each call draws a card with a value between 1 and 10 */
 }
