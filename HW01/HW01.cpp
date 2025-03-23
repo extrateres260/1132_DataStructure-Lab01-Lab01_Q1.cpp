@@ -9,8 +9,7 @@ struct Player { /* Player structure data type, includes a string type player nam
     int score;
 };
 
-struct dealer { /* Dealer structure data type, includes an int type dealer score */
-    string name;
+struct dealer {
     int score;
 };
 
@@ -20,7 +19,7 @@ int drawCard() {
 
 // Initialize player
 void initializePlayer(Player* player, string name) {
-   player->name = name; 
+   player->name = name;
    player->score = drawCard() + drawCard(); /* Using the structure variable above, initialize the player and simultaneously draw two initial cards */
 }
 // Display player score
