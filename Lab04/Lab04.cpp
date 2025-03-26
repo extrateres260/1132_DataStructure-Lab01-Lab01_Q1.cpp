@@ -33,7 +33,7 @@ public:
     }
 
     Card pop() {
-        if (stack.size() == 0) {
+        if (stack.empty()) {
                 cout << "Stack is empty!" << endl;
                 return Card("None", "None");
         } else {
@@ -45,7 +45,7 @@ public:
 
 
     bool isEmpty() const {
-        if(stack.size()==0) {
+        if(stack.empty()) {
             return true;
         }
     }
