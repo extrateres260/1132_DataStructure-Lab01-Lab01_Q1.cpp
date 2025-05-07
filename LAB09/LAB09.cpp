@@ -106,7 +106,7 @@ public:
         
         // if判斷式，檢查右子節點是否為有效範圍且比當前節點(父節點)小
         //如果判斷式成立，把smallest設為right
-        else if (right < heap.size() && heap[right] < heap[smallest]) {
+        if (right < heap.size() && heap[right] < heap[smallest]) {
             smallest = right; // 更新smallest為右子節點
         } // 檢查右子節點是否存在且比當前節點小
 
