@@ -19,3 +19,7 @@ Click Open.
 You should have the header mainwindow.cpp, Mainwindow.h, expression_evaluator.cpp, expression_evaluator.h, main.cpp automatically
 
 Now you can run the project.
+
+
+
+NB: User may create a new project and the create the header file, and paste the codes
