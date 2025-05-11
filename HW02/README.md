@@ -5,7 +5,10 @@ We used Qt software to design a simple user interface for better interaction. So
     4. Select: -CmakeLists.txt
     5. Click Open.
 You should have the header mainwindow.cpp, Mainwindow.h, expression_evaluator.cpp, expression_evaluator.h, main.cpp automatically
+
 Now you can run the project.
+
 NB: User may also create a new project and the create the header file, and paste the codes.
+
 
 Try the given expressions found on Testing Strategy part.
