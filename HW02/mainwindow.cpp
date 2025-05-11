@@ -82,7 +82,7 @@ void MainWindow::onEqualClicked() {
     InfixToPostfix(infix, postfix);
     double result = calculator(postfix);
 
-    display->setText(QString::number(result));
+   display->setText(QString::number(result, 'g', 15));
 }
 
 void MainWindow::removeLastCharacter() {
