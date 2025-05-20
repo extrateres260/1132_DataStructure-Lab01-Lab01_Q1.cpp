@@ -71,41 +71,44 @@ public:
         }
     }
 
-    void level_Sum(int layer){
-        if (layer < 0) {
-            cout << "Error: Layer cannot be negative." << endl;
-            return;
-        }
-        queue<TreeNode*> q;
-        q.push(root);
-        int currentLayer = 0;
-        int sum = 0;
-       // BFS to find the sum of the specified layer
-        while (!q.empty()) { // 當queue不為空時
-            int size = q.size();
-            if (currentLayer == layer) { 
-                for (int i = 0; i < size; i++) {
-                    TreeNode* current = q.front();
-                    q.pop();
-                    sum += current->value;
-                }
-                cout << "Sum of layer " << layer << ": " << sum << endl;
-                return; // Exit after processing the desired layer
-            }
-            for (int i = 0; i < size; i++) { 
-                TreeNode* current = q.front();
-                q.pop();
-                if (current->left) q.push(current->left);
-                if (current->right) q.push(current->right);
-            }
-            currentLayer++;
-        }
-        // If we exit the loop, the layer does not exist
-        cout << "Error: Layer " << layer << " does not exist in the tree." << endl;
+    // 計算指定層的總和
+    void level_Sum(int layer){ 
+        if (layer < 0) { // If the input layer is negative, output  an error message
+            cout << "Error: Layer cannot be negative." << endl;
+            return;
+        } 
+        
+        // BFS to find the sum of the specified layer
+        queue<TreeNode*> q; // Queue to store nodes at each level
+        q.push(root);       // Start with the root node
+        int currentLayer = 0; // The current layer being processed
+        int sum = 0;
+    
+        while (!q.empty()) {          // Process each layer
+            int size = q.size();     // Number of nodes at the current layer
+            if (currentLayer == layer) {         // If we are at the desired layer, iterate through all nodes at this layer, add the value of the current node to the sum
+                for (int i = 0; i < size; i++) { 
+                    TreeNode* current = q.front(); 
+                    q.pop();
+                    sum += current->value; 
+                }
+                cout << "Sum of layer " << layer << ": " << sum << endl; // Output the sum of the layer
+                return; // Exit after processing 
+            }
+            for (int i = 0; i < size; i++) {  // If we are not at the desired layer, continue to the next layer 
+                TreeNode* current = q.front();
+                q.pop();
+                if (current->left) q.push(current->left); 
+                if (current->right) q.push(current->right); 
+            }
+            currentLayer++;
+        }
+        // If we exit the loop, the layer does not exist
+        cout << "Error: Layer " << layer << " does not exist in the tree." << endl;
+    }
 
-    }
 
-    // Helper function to sum all nodes in a subtree
+   // Helper function to sum all nodes in a subtree
     int sumSubtree(TreeNode* node) {
         if (node == nullptr) return 0;
         return node->value + sumSubtree(node->left) + sumSubtree(node->right);
@@ -113,24 +116,31 @@ public:
 
     // Calculates and prints the sum of left and right subtrees of a given node value
     void SumLeftRightChildren(TreeNode* node, int target) {
-        if (node == nullptr) return;
-        if (node->left == nullptr) {
-            cout << "No left child for node " << node->value << endl;
-            return;
-        }
-        if (node->right == nullptr) {
-            cout << "No right child for node " << node->value << endl;
-            return;
-        }
-        if(node->left == nullptr && node->right == nullptr){
-            cout << "No child for node " << node->value << endl;
-            return;
-        }
-        if (node->value == target) {
-            int leftSum = sumSubtree(node->left);
-            int rightSum = sumSubtree(node->right);
-            cout << "Sum of left subtree: " << leftSum << endl;
-            cout << "Sum of right subtree: " << rightSum << endl;
+        if (node == nullptr) return; // If the node is null, return
+
+        if (node->value == target) { // If the current node is the desired node
+            if (node->left == nullptr && node->right == nullptr) { // If it's a leaf node, show a message
+                cout << " Leaf Node! " << node->value << endl;
+                return;
+            }
+            if (node->left == nullptr) { // If there's no left child, show a message
+                cout << "No left child for node " << node->value << endl;
+            } else {
+                cout << "Sum of left subtree: " << sumSubtree(node->left) << endl; // Ortherwise, call the helper function Sumsubtree to calculate the sum of the left subtree
+            }
+            if (node->right == nullptr) { // If there's no right child, show a message
+                cout << "No right child for node " << node->value << endl;
+            } else {
+                cout << "Sum of right subtree: " << sumSubtree(node->right) << endl; // Ortherwise, call the helper function Sumsubtree to calculate the sum of the right subtree
+            }
+            // Compare the sum of left and right subtrees
+            if(sumSubtree(node->left)>sumSubtree(node->right)) { 
+                cout << "Left subtree is larger" << endl;
+            }
+            if (sumSubtree(node->right)>sumSubtree(node->left)) {
+                cout << "Right subtree is larger" << endl;
+            }
+
             return;
         }
         SumLeftRightChildren(node->left, target);
@@ -143,10 +153,6 @@ int main() {
     BinaryTree tree;
     vector<int> arr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, 10, 11, -1, -1 };
     tree.buildTree(arr);
-
-    cout << "DFS Result: ";
-    tree.Depth_first_search(tree.root);
-    cout << endl;
 
     cout << "BFS Result: ";
     tree.Breadth_first_search(tree.root);
