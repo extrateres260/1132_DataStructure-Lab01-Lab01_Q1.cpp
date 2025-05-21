@@ -104,7 +104,7 @@ public:
             currentLayer++;
         }
         // If we exit the loop, the layer does not exist
-        cout << "Error: Layer " << layer << " does not exist in the tree." << endl;
+        cout << "Error: number of layer exceeded" << endl;
     }
 
 
@@ -115,37 +115,36 @@ public:
     }
 
     // Calculates and prints the sum of left and right subtrees of a given node value
-    void SumLeftRightChildren(TreeNode* node, int target) {
-        if (node == nullptr) return; // If the node is null, return
+    bool SumLeftRightChildren(TreeNode* node, int target) {
+        if (node == nullptr) return false; // If the node is null, return false
 
-        if (node->value == target) { // If the current node is the desired node
-            if (node->left == nullptr && node->right == nullptr) { // If it's a leaf node, show a message
-                cout << " Leaf Node! " << node->value << endl;
-                return;
-            }
-            if (node->left == nullptr) { // If there's no left child, show a message
-                cout << "No left child for node " << node->value << endl;
-            } else {
-                cout << "Sum of left subtree: " << sumSubtree(node->left) << endl; // Ortherwise, call the helper function Sumsubtree to calculate the sum of the left subtree
-            }
-            if (node->right == nullptr) { // If there's no right child, show a message
-                cout << "No right child for node " << node->value << endl;
-            } else {
-                cout << "Sum of right subtree: " << sumSubtree(node->right) << endl; // Ortherwise, call the helper function Sumsubtree to calculate the sum of the right subtree
-            }
-            // Compare the sum of left and right subtrees
-            if(sumSubtree(node->left)>sumSubtree(node->right)) { 
-                cout << "Left subtree is larger" << endl;
-            }
-            if (sumSubtree(node->right)>sumSubtree(node->left)) {
-                cout << "Right subtree is larger" << endl;
-            }
-
-            return;
+        if (node->value == target) { // If the current node is the desired node
+            if (node->left == nullptr && node->right == nullptr) { // If it's a leaf node, show a message
+                cout << node->value << " is a Leaf Node! " << endl;
+                return true;
+            }
+            if (node->left == nullptr) { // If there's no left child, show a message
+                cout << "No left child for node " << node->value << endl;
+            } else {
+                cout << "Sum of left subtree: " << sumSubtree(node->left) << endl; // Ortherwise, call the helper function Sumsubtree to calculate the sum of the left subtree
+            }
+            if (node->right == nullptr) { // If there's no right child, show a message
+                cout << "No right child for node " << node->value << endl;
+            } else {
+                cout << "Sum of right subtree: " << sumSubtree(node->right) << endl; // Ortherwise, call the helper function Sumsubtree to calculate the sum of the right subtree
+            }
+            // Compare the sum of left and right subtrees
+            if(sumSubtree(node->left)>sumSubtree(node->right)) { 
+                cout << "Sum of Left subtree is larger" << endl;
+            }
+            if (sumSubtree(node->right)>sumSubtree(node->left)) {
+                cout << "Sum of Right subtree is larger" << endl;
+            }
+            return true; // Return true if the target node is found
         }
-        SumLeftRightChildren(node->left, target);
-        SumLeftRightChildren(node->right, target);
-    }
+        // Recursively search in the left and right subtrees
+        return SumLeftRightChildren(node->left, target) || SumLeftRightChildren(node->right, target);
+    }
 
 };
 
@@ -167,6 +166,8 @@ int main() {
     int target;
     cout << "Enter the target node value to calculate left and right subtree sums: ";
     cin >> target;
-    tree.SumLeftRightChildren(tree.root, target);
+    if (!tree.SumLeftRightChildren(tree.root, target)) { // If the target node is not found
+        cout << "Node with value " << target << " not found." << endl;
+    }
     return 0;
 }
