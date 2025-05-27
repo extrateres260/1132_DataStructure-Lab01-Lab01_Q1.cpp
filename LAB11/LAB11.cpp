@@ -58,31 +58,31 @@ public:
     }
 
     // Sort products using QuickSort
-    void quicksort(vector<string>& names, vector<int>& exp, vector<int>& pop, int low, int high) {
+    void quicksort(vector<string>& names, vector<int>& expiration, vector<int>& popularity, int low, int high) {
         if (low < high) {
-            int pi = partition(names, exp, pop, low, high);
-            quicksort(names, exp, pop, low, pi - 1);
-            quicksort(names, exp, pop, pi + 1, high);
+            int pi = partition(names, expiration, popularity, low, high);
+            quicksort(names, expiration, popularity, low, pi - 1);
+            quicksort(names, expiration, popularity, pi + 1, high);
         }
     }
     
     // Partition function for three parallel vectors
-    int partition(vector<string>& names, vector<int>& exp, vector<int>& pop, int low, int high) {
-        int pivotExp = exp[high];
-        int pivotPop = pop[high];
+    int partition(vector<string>& names, vector<int>& expiration, vector<int>& popularity, int low, int high) {
+        int pivotExp = expiration[high];
+        int pivotPop = popularity[high];
         string pivotName = names[high];
         int i = low - 1;
         for (int j = low; j < high; j++) {
             // Sort by expiration ascending, then popularity descending
-            if (exp[j] < pivotExp || (exp[j] == pivotExp && pop[j] > pivotPop)) {
+            if (expiration[j] < pivotExp || (expiration[j] == pivotExp && popularity[j] > pivotPop)) {
                 i++;
-                swap(exp[i], exp[j]);
-                swap(pop[i], pop[j]);
+                swap(expiration[i], expiration[j]);
+                swap(popularity[i], popularity[j]);
                 swap(names[i], names[j]);
             }
         }
-        swap(exp[i + 1], exp[high]);
-        swap(pop[i + 1], pop[high]);
+        swap(expiration[i + 1], expiration[high]);
+        swap(popularity[i + 1], popularity[high]);
         swap(names[i + 1], names[high]);
         return i + 1;
     } 
@@ -91,7 +91,7 @@ public:
 
 
 int main() {
-    string filename = "input3.txt"; //請貼上input檔案的正確路徑
+    string filename = "input1.txt"; //請貼上input檔案的正確路徑
     if (filename.empty()) {
         cerr << "Error: Filename cannot be empty." << endl;
         return 1;
@@ -134,11 +134,10 @@ int main() {
     MaxHeap maxHeap;
     maxHeap.buildMaxHeap(exp); // Build the max heap based on expiration dates
     maxHeap.quicksort(names, exp, pop, 0, N - 1); // Sort the three parallel vectors
-    cout << "Sorted data:" << endl;
+    cout << "Sorted Products:" << endl;
 
     for (int i = 0; i < N; i++) {
         cout << names[i] << endl;
-    }
-    
+    }       
     return 0;
 }
